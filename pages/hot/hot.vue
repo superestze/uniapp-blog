@@ -4,7 +4,7 @@
     <view class="search-box">
       <my-search :placeholderText="placeholderText"></my-search>
     </view>
-    <my-tabs :tabData="tabData"></my-tabs>
+    <my-tabs :tabData="tabData" :defaultIndex="defaultIndex"></my-tabs>
   </view>
 </template>
 
@@ -16,7 +16,8 @@
     data() {
       return {
         placeholderText: "uni-app 自定义组件",
-        tabData: []
+        tabData: [],
+        defaultIndex: 0
       };
     },
     created() {
