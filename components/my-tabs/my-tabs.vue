@@ -2,7 +2,7 @@
   <view>
     <view class="tab-container">
       <view class="tab-box">
-        <scroll-view class="scroll-view" scroll-with-animation scroll-x>
+        <scroll-view :scroll-left="scrollLeft" class="scroll-view" scroll-with-animation scroll-x>
           <view class="scroll-content">
             <view class="tab-item-box">
               <block v-for="(item, index) in tabData" :key="index">
@@ -55,6 +55,7 @@ export default {
       slider: {
         left: 0
       },
+      scrollLeft: 0,
       // 定义下划线的宽高
       defaultConfig: {
         underLineWidth: 24,
@@ -92,6 +93,8 @@ export default {
       this.slider = {
         left: this.tabList[index]._slider.left
       }
+    //   控制滚动条横向滚动
+      this.scrollLeft = this.activeIndex * this.defaultConfig.underLineWidth
     },
     updateTabWidth() {
       let data = this.tabList
