@@ -6,8 +6,15 @@
           <view class="scroll-content">
             <view class="tab-item-box">
               <block v-for="(item, index) in tabData" :key="index">
-                <view :id="'_tab_'+index" :class="{'tab-item-active': activeIndex === index}" class="tab-item"
-                      @click="onTabClick(index)">
+                <view :id="'_tab_'+index"
+                      :class="{'tab-item-active': activeIndex === index}"
+                      :style="{
+                        color: activeIndex === index ? defaultConfig.activeTextColor : defaultConfig.textColor
+                      }"
+                      class="tab-item"
+                      @click="onTabClick(index)"
+                >
+
                   {{ item.label || item }}
                 </view>
 
@@ -19,7 +26,6 @@
               height: defaultConfig.underLineHeight + 'px',
               backgroundColor: defaultConfig.underLineColor
             }" class="underline">
-              {{slider.left}}
             </view>
           </view>
         </scroll-view>
@@ -60,11 +66,19 @@ export default {
       defaultConfig: {
         underLineWidth: 24,
         underLineHeight: 2,
-        underLineColor: '#f94d2a'
+        underLineColor: '#f94d2a',
+        textColor: '#333333',
+        activeTextColor: '#f94d2a'
       }
     };
   },
   watch: {
+    config: {
+      handler(value) {
+        this.defaultConfig = {...this.defaultConfig, ...value}
+      },
+      immediate: true
+    },
     tabData: {
       handler(value) {
         this.tabList = value
@@ -93,7 +107,7 @@ export default {
       this.slider = {
         left: this.tabList[index]._slider.left
       }
-    //   控制滚动条横向滚动
+      //   控制滚动条横向滚动
       this.scrollLeft = this.activeIndex * this.defaultConfig.underLineWidth
     },
     updateTabWidth() {
@@ -106,9 +120,9 @@ export default {
             // res 是获取到的dom
             (res) => {
               item._slider = {
-                left: res.left + (res.width - this.defaultConfig.underLineWidth) /2
+                left: res.left + (res.width - this.defaultConfig.underLineWidth) / 2
               }
-              if(data.length - 1 ===index) {
+              if (data.length - 1 === index) {
                 this.tabToIndex()
               }
             }
