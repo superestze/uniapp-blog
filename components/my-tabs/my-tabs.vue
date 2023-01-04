@@ -1,6 +1,21 @@
 <template>
   <view>
-    <!--  -->
+    <view class="tab-container">
+      <view class="tab-box">
+        <scroll-view scroll-x scroll-with-animation>
+          <view class="scroll-content">
+            <view class="tab-item-box">
+              <block v-for="(item, index) in tabData" :key="index">
+                <view class="tab-item">
+                  {{item.label || item}}
+                </view>
+              </block>
+            </view>
+          </view>
+        </scroll-view>
+
+      </view>
+    </view>
   </view>
 </template>
 
@@ -12,8 +27,8 @@
         type: Object,
         default: () => {}
       },
-      tableData: {
-        tyoe: Array,
+      tabData: {
+        type: Array,
         default: () => []
       },
       defaultIndex: {

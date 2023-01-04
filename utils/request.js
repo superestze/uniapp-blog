@@ -10,6 +10,9 @@ function request({
       url: BASE_URL + url,
       data,
       method,
+      header: {
+        icode: '2293F72EB7104E55'
+      },
       success: ({
         data,
         statusCode,

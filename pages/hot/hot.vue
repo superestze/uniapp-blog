@@ -4,6 +4,7 @@
     <view class="search-box">
       <my-search :placeholderText="placeholderText"></my-search>
     </view>
+    <my-tabs :tabData="tabData"></my-tabs>
   </view>
 </template>
 
@@ -14,7 +15,8 @@
   export default {
     data() {
       return {
-        placeholderText: "uni-app 自定义组件"
+        placeholderText: "uni-app 自定义组件",
+        tabData: []
       };
     },
     created() {
@@ -22,8 +24,11 @@
     },
     methods: {
       async loadHotTabs() {
-        const res = await getHotTabs()
+        const {
+          data: res
+        } = await getHotTabs()
         console.log(res)
+        this.tabData = res.list
       }
     }
   }
