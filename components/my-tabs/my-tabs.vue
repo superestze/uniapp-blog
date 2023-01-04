@@ -12,6 +12,9 @@
               </block>
             </view>
           </view>
+          <view class="underline" :style="{ transform:  'transformX('+ slider.left +')'}">
+
+          </view>
         </scroll-view>
 
       </view>
@@ -38,7 +41,10 @@
     },
     data() {
       return {
-        activeIndex: -1
+        activeIndex: -1,
+        slider: {
+          left: 0
+        }
       };
     },
     watch: {
@@ -96,6 +102,16 @@
                 color: $uni-text-color-hot;
               }
             }
+          }
+
+          .underline {
+            height: 2px;
+            width: 24px;
+            background-color: $uni-text-color-hot;
+            border-radius: 3px;
+            transition: 0.5s;
+            position: absolute;
+            bottom: 0;
           }
         }
       }
