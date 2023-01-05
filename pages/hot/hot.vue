@@ -13,12 +13,13 @@
       4. 渲染真实数据
       5. 联动
     -->
-    <swiper class="swiper" :current="currentIndex">
+    <swiper class="swiper" :current="currentIndex" :style="{height: currentSwiperHeight + 'px'}">
       <swiper-item class="swiper-item" v-for="(tabItem, tabIndex) in tabData" :key="tabIndex">
         <view>
           <uni-load-more status="loading" v-if="isLoading"></uni-load-more>
           <block v-else>
-            <hot-list-item v-for="(item, index) in listData[tabIndex]" :data="item" :ranking="index+1" :key="index">
+            <hot-list-item :class="'hot-list-item-'+tabIndex" v-for="(item, index) in listData[tabIndex]" :data="item"
+              :ranking="index+1" :key="index">
             </hot-list-item>
           </block>
         </view>
@@ -41,7 +42,9 @@
         currentIndex: 0,
         // 以index 为key, 对应的List 为value
         listData: {},
-        isLoading: false
+        isLoading: false,
+        currentSwiperHeight: 0,
+        swiperHeightData: {}
       };
     },
     created() {
@@ -67,13 +70,34 @@
           } = await getHotListFormTabType(id)
           this.listData[this.currentIndex] = res.list
           this.isLoading = false
+          setTimeout(async () => {
+            // 获取到当前的高度
+            this.currentSwiperHeight = await this.getCurrentSwiperHeight()
+            this.swiperHeightData[this.currentIndex] = this.currentSwiperHeight
+          }, 0)
         }
       },
 
       onTabClick(index) {
         this.currentIndex = index
         this.loadHotListFormTab()
+      },
+      getCurrentSwiperHeight() {
+        return new Promise((resolve, reject) => {
+          let sum = 0
+          const query = uni.createSelectorQuery().in(this)
+          query
+            .selectAll(`.hot-list-item-${this.currentIndex}`)
+            .boundingClientRect((res) => {
+              res.forEach(item => {
+                sum += item.height
+              })
+              resolve(sum)
+            })
+            .exec()
+        })
       }
+
     }
   }
 </script>
