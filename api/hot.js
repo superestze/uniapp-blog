@@ -8,3 +8,15 @@ export function getHotTabs() {
     url: '/hot/tabs'
   })
 }
+
+/**
+ * @param {Object} type热搜文章列表
+ */
+export function getHotListFormTabType(type) {
+  return request({
+    url: '/hot/list',
+    data: {
+      type
+    }
+  })
+}

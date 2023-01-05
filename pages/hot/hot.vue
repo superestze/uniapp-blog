@@ -4,7 +4,7 @@
     <view class="search-box">
       <my-search :placeholderText="placeholderText"></my-search>
     </view>
-    <my-tabs :defaultIndex="defaultIndex" :tabData="tabData"></my-tabs>
+    <my-tabs @tabClick="onTabClick" :defaultIndex="currentIndex" :tabData="tabData"></my-tabs>
     <!-- list -->
     <!--
       1. 使用mock 构建list 的数据
@@ -14,16 +14,20 @@
       5. 联动
     -->
     <view>
-      <hot-list-item v-for="(item, index) in 50" :key="index">
+      <uni-load-more status="loading" v-if="isLoading"></uni-load-more>
+      <block v-else>
+        <hot-list-item v-for="(item, index) in listData[currentIndex]" :data="item" :ranking="index+1" :key="index">
+        </hot-list-item>
+      </block>
 
-      </hot-list-item>
     </view>
   </view>
 </template>
 
 <script>
   import {
-    getHotTabs
+    getHotTabs,
+    getHotListFormTabType
   } from '../../api/hot.js'
 
   export default {
@@ -31,7 +35,10 @@
       return {
         placeholderText: "uni-app 自定义组件",
         tabData: [],
-        defaultIndex: 0
+        currentIndex: 0,
+        // 以index 为key, 对应的List 为value
+        listData: {},
+        isLoading: false
       };
     },
     created() {
@@ -42,8 +49,27 @@
         const {
           data: res
         } = await getHotTabs()
-        console.log(res)
         this.tabData = res.list
+        this.loadHotListFormTab()
+      },
+      // 获取list
+      async loadHotListFormTab() {
+        // 没有获取过数据和已经获取过数据
+        // 没有获取数据， 获取数据后， 存到本地， 
+        if (!this.listData[this.currentIndex]) {
+          this.isLoading = true
+          const id = this.tabData[this.currentIndex].id
+          const {
+            data: res
+          } = await getHotListFormTabType(id)
+          this.listData[this.currentIndex] = res.list
+          this.isLoading = false
+        }
+      },
+
+      onTabClick(index) {
+        this.currentIndex = index
+        this.loadHotListFormTab()
       }
     }
   }

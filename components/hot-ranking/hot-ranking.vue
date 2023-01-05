@@ -1,17 +1,31 @@
 <template>
   <view class="ranking-container">
-    <image class="ranking-bg" src="@/static/images/ranking-1.png"></image>
-    <text class="ranking-text">1</text>
+    <image class="ranking-bg" :src="getRankingBg"></image>
+    <text class="ranking-text" :class="{'text-white': ranking <= 3}">{{ranking}}</text>
   </view>
 </template>
 
 <script>
   export default {
     name: "hot-ranking",
+    props: {
+      ranking: {
+        type: Number,
+        require: true
+      }
+    },
     data() {
       return {
 
       };
+    },
+    computed: {
+      getRankingBg() {
+        if (this.ranking <= 3) {
+          return require(`@/static/images/ranking-${this.ranking}.png`)
+        }
+        return require(`@/static/images/ranking-other.png`)
+      }
     }
   }
 </script>
@@ -36,7 +50,10 @@
       font-size: $uni-font-size-sm;
       font-weight: bold;
       color: $uni-text-color;
+    }
 
+    .text-white {
+      color: white;
     }
   }
 </style>
