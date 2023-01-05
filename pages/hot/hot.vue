@@ -13,14 +13,17 @@
       4. 渲染真实数据
       5. 联动
     -->
-    <view>
-      <uni-load-more status="loading" v-if="isLoading"></uni-load-more>
-      <block v-else>
-        <hot-list-item v-for="(item, index) in listData[currentIndex]" :data="item" :ranking="index+1" :key="index">
-        </hot-list-item>
-      </block>
-
-    </view>
+    <swiper class="swiper" :current="currentIndex">
+      <swiper-item class="swiper-item" v-for="(tabItem, tabIndex) in tabData" :key="tabIndex">
+        <view>
+          <uni-load-more status="loading" v-if="isLoading"></uni-load-more>
+          <block v-else>
+            <hot-list-item v-for="(item, index) in listData[tabIndex]" :data="item" :ranking="index+1" :key="index">
+            </hot-list-item>
+          </block>
+        </view>
+      </swiper-item>
+    </swiper>
   </view>
 </template>
 
