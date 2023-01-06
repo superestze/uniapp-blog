@@ -16,7 +16,7 @@
           <view class="hot-box">
             <!-- 小图标 -->
             <image class="hot-icon" src="@/static/images/hot-icon.png" mode="scaleToFill" />
-            <text class="hot-text">{{data.views}}热度</text>
+            <text class="hot-text">{{data.views | hotNumber }}热度</text>
           </view>
         </view>
       </view>
