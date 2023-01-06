@@ -13,7 +13,8 @@
       4. 渲染真实数据
       5. 联动
     -->
-    <swiper class="swiper" :current="currentIndex" :style="{height: currentSwiperHeight + 'px'}">
+    <swiper @animationfinish="onSwiperEnd" class="swiper" :current="currentIndex"
+      :style="{height: currentSwiperHeight + 'px'}">
       <swiper-item class="swiper-item" v-for="(tabItem, tabIndex) in tabData" :key="tabIndex">
         <view>
           <uni-load-more status="loading" v-if="isLoading"></uni-load-more>
@@ -96,6 +97,12 @@
             })
             .exec()
         })
+      },
+      onSwiperEnd() {
+        if (!this.listData[this.currentIndex]) {
+          return this.loadHotListFormTab()
+        }
+        this.currentSwiperHeight = this.swiperHeightData[this.currentIndex]
       }
 
     }
