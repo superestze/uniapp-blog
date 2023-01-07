@@ -1,6 +1,12 @@
 <template>
   <view class="my-search-container">
-    <view class="my-search-box">
+    <!-- 搜索输入框 -->
+    <uni-search-bar @confirm="onSearch" @clear="onClear" @focus="onFocus" @blur="onBlur" @cancel="onCancel"
+      @input="onInput" :value="value" class="my-search-bar" :placeholder="placeholderText" :radius="100"
+      :bgColor="config.backgroundColor" v-if="isShowInput">
+      <uni-icons slot="clearIcon" type="clear" color="#999999" />
+    </uni-search-bar>
+    <view v-else class="my-search-box">
       <image src="@/static/images/search.png" class="icon"></image>
       <text class="placeholder">{{placeholderText}}</text>
     </view>
@@ -10,8 +16,24 @@
 
 <script>
   export default {
-    name: "my-search",
     props: {
+      value: {
+        type: String
+      },
+      config: {
+        type: Object,
+        default: () => ({
+          height: 36,
+          backgroundColor: '#ffffff',
+          icon: '/static/images/search.png',
+          textColor: '#454545',
+          border: '1px solid #c9c9c9'
+        })
+      },
+      isShowInput: {
+        type: Boolean,
+        default: false
+      },
       placeholderText: {
         type: String,
         default: '搜索'
@@ -21,6 +43,30 @@
       return {
 
       };
+    },
+    methods: {
+      onSearch() {
+        this.$emit('search', this.value)
+
+      },
+      // 获取焦点
+      onFocus() {
+        this.$emit('focus', this.value)
+      },
+      // 失去焦点
+      onBlur() {
+        this.$emit('blur', this.value)
+
+      },
+      onCancel() {
+        this.$emit('cancel', this.value)
+      },
+      onInput() {
+        this.$emit('input', val)
+      },
+      onClear() {
+
+      }
     }
   }
 </script>

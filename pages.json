@@ -61,7 +61,7 @@
     "pages": [{
       "path": "pages/search-blog/search-blog",
       "style": {
-        "navigateBarTitleText": "文章搜索"
+        "navigationBarTitleText": "文章搜索"
       }
     }]
   }]
