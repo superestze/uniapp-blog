@@ -19,7 +19,7 @@
       <search-hot-list @onSearch="onSearchConfirm"></search-hot-list>
     </view>
     <view class="search-history-box" v-else-if="showType === SEARCH_HISTORY">
-      <search-history></search-history>
+      <search-history @onSearch="onSearchConfirm" @removeSearchData="removeSearchData" @removeAllSearchData="removeAllSearchData" :searchData="searchData"></search-history>
     </view>
     <view class="search-result-list-box" v-else>
       <search-result-list></search-result-list>
@@ -44,6 +44,7 @@ export default {
       HOT_LIST,
       SEARCH_HISTORY,
       SEARCH_RESULT,
+      searchData: [],
     };
   },
   created() {
@@ -63,6 +64,7 @@ export default {
      */
     onSearchConfirm(val) {
       this.searchValue = val ? val : this.defaultText;
+      this.saveSearchData();
       if (this.searchValue) {
         this.showType = SEARCH_RESULT;
       }
@@ -95,6 +97,23 @@ export default {
      */
     onSearchCancel() {
       this.showType = HOT_LIST;
+    },
+    /**
+     * @description: 保存搜索数据
+     * @return {*}
+     */
+    saveSearchData() {
+      const index = this.searchData.findIndex((item) => item === this.searchValue);
+      if (index !== -1) {
+        this.searchData.splice(index, 1);
+      }
+      this.searchData.unshift(this.searchValue);
+    },
+    removeAllSearchData() {
+      this.searchData = [];
+    },
+    removeSearchData(index) {
+      this.searchData.splice(index, 1);
     },
   },
 };
