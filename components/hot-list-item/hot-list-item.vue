@@ -6,106 +6,99 @@
       </view>
       <view class="item-box-right">
         <!-- 标题 -->
-        <view class="item-title line-clamp-2">{{data.title}}</view>
+        <view class="item-title line-clamp-2">{{ data.title }}</view>
         <!-- 简介 -->
-        <view class="item-desc line-clamp-2">{{data.desc}}</view>
+        <view class="item-desc line-clamp-2">{{ data.desc }}</view>
         <view class="item-bottom-box">
           <!-- 作者 -->
-          <text class="item-author">{{data.nickname}}</text>
+          <text class="item-author">{{ data.nickname }}</text>
           <!-- 热度 -->
           <view class="hot-box">
             <!-- 小图标 -->
             <image class="hot-icon" src="@/static/images/hot-icon.png" mode="scaleToFill" />
-            <text class="hot-text">{{data.views | hotNumber }}热度</text>
+            <text class="hot-text">{{ data.views | hotNumber }}热度</text>
           </view>
         </view>
       </view>
-
-
     </view>
-  </view>
   </view>
 </template>
 
 <script>
-  export default {
-    name: "hot-list-item",
-    props: {
-      data: {
-        type: Object,
-        require: true
-      },
-      ranking: {
-        type: Number,
-        require: true
-      }
+export default {
+  name: "hot-list-item",
+  props: {
+    data: {
+      type: Object,
+      require: true,
     },
-    data() {
-      return {
-
-      };
-    }
-  }
+    ranking: {
+      type: Number,
+      require: true,
+    },
+  },
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  .item-container {
-    padding-bottom: $uni-spacing-col-lg;
+.item-container {
+  padding-bottom: $uni-spacing-col-lg;
 
-    .item-box {
-      display: flex;
-      margin: 0 $uni-spacing-col-lg;
-      padding: $uni-spacing-col-lg $uni-spacing-row-lg;
-      background-color: $uni-bg-color;
-      border-radius: $uni-border-radius-lg;
-      box-shadow: 2px 2px 5px 1px rgba(143, 143, 143, .1);
+  .item-box {
+    display: flex;
+    margin: 0 $uni-spacing-col-lg;
+    padding: $uni-spacing-col-lg $uni-spacing-row-lg;
+    background-color: $uni-bg-color;
+    border-radius: $uni-border-radius-lg;
+    box-shadow: 2px 2px 5px 1px rgba(143, 143, 143, 0.1);
 
-      .item-box-left {
-        margin-right: $uni-spacing-row-sm;
+    .item-box-left {
+      margin-right: $uni-spacing-row-sm;
+    }
+
+    .item-box-right {
+      width: 100%;
+
+      .item-title {
+        font-size: $uni-font-size-lg;
+        font-weight: bold;
+        color: $uni-text-color;
       }
 
-      .item-box-right {
-        width: 100%;
+      .item-desc {
+        padding: $uni-spacing-col-sm;
+        font-size: $uni-font-size-base;
+        color: $uni-text-color;
+      }
 
-        .item-title {
-          font-size: $uni-font-size-lg;
-          font-weight: bold;
-          color: $uni-text-color;
+      .item-bottom-box {
+        margin-top: $uni-spacing-col-sm;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .item-author {
+          font-size: $uni-font-size-sm;
+          color: $uni-text-color-grey;
         }
 
-        .item-desc {
-          padding: $uni-spacing-col-sm;
-          font-size: $uni-font-size-base;
-          color: $uni-text-color;
-        }
+        .hot-box {
+          .hot-icon {
+            width: $uni-img-size-sm;
+            height: $uni-img-size-sm;
+          }
 
-        .item-bottom-box {
-          margin-top: $uni-spacing-col-sm;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          .item-author {
+          .hot-text {
+            margin-left: $uni-spacing-row-sm;
             font-size: $uni-font-size-sm;
-            color: $uni-text-color-grey;
+            color: $uni-text-color-hot;
           }
-
-          .hot-box {
-            .hot-icon {
-              width: $uni-img-size-sm;
-              height: $uni-img-size-sm;
-            }
-
-            .hot-text {
-              margin-left: $uni-spacing-row-sm;
-              font-size: $uni-font-size-sm;
-              color: $uni-text-color-hot;
-            }
-          }
-
         }
-
       }
     }
   }
+}
 </style>

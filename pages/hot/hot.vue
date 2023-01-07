@@ -1,7 +1,7 @@
 <template>
   <view class="hot-container">
     <image class="logo" mode="aspectFit" src="@/static/images/logo.png"></image>
-    <view class="search-box">
+    <view class="search-box" @click="onToSearch">
       <my-search :placeholderText="placeholderText"></my-search>
     </view>
     <view class="tab-sticky">
@@ -47,14 +47,14 @@
         isLoading: false,
         currentSwiperHeight: 0,
         swiperHeightData: {},
-        currentpageScrollTop: 0
+        currentpageScrollTop: 0,
       };
     },
     created() {
       this.loadHotTabs();
     },
     onPageScroll(res) {
-      this.currentpageScrollTop = res.scrollTop
+      this.currentpageScrollTop = res.scrollTop;
     },
     methods: {
       async loadHotTabs() {
@@ -88,6 +88,11 @@
         this.currentIndex = index;
         this.loadHotListFormTab();
       },
+      onToSearch() {
+        uni.navigateTo({
+          url: '/subpkg/pages/search-blog/search-blog'
+        })
+      },
       getCurrentSwiperHeight() {
         return new Promise((resolve, reject) => {
           let sum = 0;
@@ -112,11 +117,11 @@
       onSwiperChange(e) {
         if (this.currentIndex > 130) {
           uni.pageScrollTo({
-            scrollTop: 130
-          })
+            scrollTop: 130,
+          });
         }
-        this.currentIndex = e.detail.current
-      }
+        this.currentIndex = e.detail.current;
+      },
     },
   };
 </script>
