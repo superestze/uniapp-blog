@@ -3,7 +3,7 @@
   <view class="search-hot-list-container">
     <view class="search-hot-title">慕课热搜-全网技术-一网打尽 </view>
     <block v-for="(item, index) in hotList" :key="index">
-      <view class="search-hot-item">
+      <view class="search-hot-item" @click="onItemClick(item)">
         <hot-ranking :ranking="index + 1"></hot-ranking>
         <text class="title line-clamp">{{ item.label }}</text>
         <image class="search-hot-icon" src="/static/images/hot-icon.png" v-if="index <= 2"></image>
@@ -29,6 +29,9 @@ export default {
       const { data: res } = await getSearchHotList();
 
       this.hotList = res.list;
+    },
+    onItemClick() {
+      this.$emit("onSearch", item);
     },
   },
 };

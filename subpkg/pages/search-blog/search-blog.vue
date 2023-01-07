@@ -16,7 +16,7 @@
       ></my-search>
     </view>
     <view class="search-hot-list-box card" v-if="showType === HOT_LIST">
-      <search-hot-list></search-hot-list>
+      <search-hot-list @onSearch="onSearchConfirm"></search-hot-list>
     </view>
     <view class="search-history-box" v-else-if="showType === SEARCH_HISTORY">
       <search-history></search-history>
