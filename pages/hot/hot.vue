@@ -58,11 +58,15 @@
       this.currentpageScrollTop = res.scrollTop;
     },
     methods: {
+      /**
+       * item 点击事件
+       */
       onItemClick(item) {
         uni.navigateTo({
-          url: "/subpkg/pages/blog-detail/blog-detail",
+          url: `/subpkg/pages/blog-detail/blog-detail?author=${item.user_name}&articleId=${item.id}`
         });
       },
+
       async loadHotTabs() {
         const {
           data: res

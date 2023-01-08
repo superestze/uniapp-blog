@@ -32,6 +32,9 @@ function request({
       },
       fail: (error) => {
         reject(error)
+      },
+      complete: () => {
+        uni.hideLoading();
       }
     })
   })

@@ -56,11 +56,15 @@
       this.mescroll = this.$refs.mescrollRef.mescroll
     },
     methods: {
+      /**
+       * item 点击事件
+       */
       onItemClick(item) {
         uni.navigateTo({
-          url: "/subpkg/pages/blog-detail/blog-detail",
+          url: `/subpkg/pages/blog-detail/blog-detail?author=${item.author}&articleId=${item.id}`
         });
       },
+
       // 3. 注册 mixins
       // 4. 实现三个回调方法
       /**
