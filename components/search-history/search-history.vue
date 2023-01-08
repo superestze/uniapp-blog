@@ -23,85 +23,100 @@
 </template>
 
 <script>
-export default {
-  props: {
-    searchData: {
-      type: Array,
-      require: true,
+  import {
+    mapState,
+    mapMutations
+  } from 'vuex'
+  export default {
+    // props: {
+    //   searchData: {
+    //     type: Array,
+    //     require: true,
+    //   },
+    // },
+    data() {
+      return {
+        isShowClear: false,
+      };
     },
-  },
-  data() {
-    return {
-      isShowClear: false,
-    };
-  },
-  methods: {
-    onClearAll() {
-      uni.showModel({
-        title: "提示",
-        content: "删除搜索历史数据",
-        showContent: true,
-        success: ({ confirm, cancel }) => {
-          if (confirm) {
-            this.isShowClear = false;
-            this.$emit("removeAllSearchData");
-          }
-        },
-      });
+    computed: {
+      ...mapState('search', ['searchData'])
     },
-    onHistoryItemClick(item, index) {
-      if (this.isShowClear) {
-        this.$emit("removeSearchData", index);
-      } else {
-        this.$emit("onSearch", item);
-      }
+    methods: {
+      ...mapMutations('search', ['removeAllSearchData', 'removeSearchData']),
+      onClearAll() {
+        uni.showModel({
+          title: "提示",
+          content: "删除搜索历史数据?",
+          showCancel: true,
+          success: ({
+            confirm,
+            cancel
+          }) => {
+            if (confirm) {
+              this.isShowClear = false;
+              this.removeAllSearchData()
+            }
+          },
+        });
+      },
+      onHistoryItemClick(item, index) {
+        if (this.isShowClear) {
+          this.removeSearchData(index)
+        } else {
+          this.$emit("onSearch", item);
+        }
+      },
     },
-  },
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.search-history-container {
-  padding: $uni-spacing-col-lg $uni-spacing-row-lg;
+  .search-history-container {
+    padding: $uni-spacing-col-lg $uni-spacing-row-lg;
 
-  .search-history-title-box {
-    display: flex;
-    .search-history-title {
-      font-size: $uni-font-size-sm;
-      color: $uni-text-color;
-      padding: $uni-spacing-col-sm $uni-spacing-row-sm;
-    }
+    .search-history-title-box {
+      display: flex;
 
-    .txt {
-      color: $uni-text-color-grey;
-      font-size: $uni-font-size-sm;
-      padding: $uni-spacing-col-sm $uni-spacing-row-sm;
-    }
-  }
-  .search-history-box {
-    margin-top: $uni-spacing-row-lg;
-    .search-history-item {
-      width: 50%;
-      box-sizing: border-box;
-      display: inline-block;
-      padding: $uni-spacing-col-lg $uni-spacing-row-lg;
-      position: relative;
-      .history-txt {
-        display: inline-block;
-        font-size: $uni-font-size-base;
+      .search-history-title {
+        font-size: $uni-font-size-sm;
+        color: $uni-text-color;
+        padding: $uni-spacing-col-sm $uni-spacing-row-sm;
       }
 
-      .search-history-item:nth-child(odd):before {
-        content: "";
-        border-left: 1px solid #999;
+      .txt {
+        color: $uni-text-color-grey;
+        font-size: $uni-font-size-sm;
+        padding: $uni-spacing-col-sm $uni-spacing-row-sm;
+      }
+    }
+
+    .search-history-box {
+      margin-top: $uni-spacing-row-lg;
+
+      .search-history-item {
+        width: 50%;
+        box-sizing: border-box;
         display: inline-block;
-        height: 10px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 0;
+        padding: $uni-spacing-col-lg $uni-spacing-row-lg;
+        position: relative;
+
+        .history-txt {
+          display: inline-block;
+          font-size: $uni-font-size-base;
+        }
+
+        .search-history-item:nth-child(odd):before {
+          content: "";
+          border-left: 1px solid #999;
+          display: inline-block;
+          height: 10px;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 0;
+        }
       }
     }
   }
-}
 </style>
