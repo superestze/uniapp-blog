@@ -13,3 +13,11 @@ export function getSearchHotList() {
     url: '/search/hot-list',
   })
 }
+
+
+export function getSearchResult(data) {
+  return request({
+    url: '/search',
+    data
+  })
+}

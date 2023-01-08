@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'search-list'
+const HISTIRT_MAX = 10
 export default {
   namespaced: true,
   state: () => {
@@ -20,6 +21,11 @@ export default {
         state.searchData.splice(index, 1);
       }
       state.searchData.unshift(val);
+
+      if (state.searchData.length > HISTIRT_MAX) {
+        state.searchData.splice(HISTIRT_MAX, state.searchData.length - HISTIRT_MAX)
+      }
+
       this.commit('search/saveToStorage')
     },
     removeSearchData(state, index) {

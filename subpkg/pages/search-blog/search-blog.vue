@@ -13,7 +13,8 @@
       <search-history @onSearch="onSearchConfirm"></search-history>
     </view>
     <view class="search-result-list-box" v-else>
-      <search-result-list></search-result-list>
+      <!-- 1. 给mescroll-body的组件添加: ref="mescrollItem" (固定的,不可改,与mescroll-comp.js对应)-->
+      <search-result-list ref="mescrollItem" :queryStr="searchValue" />
     </view>
   </div>
 </template>
@@ -26,12 +27,15 @@
     getDefaultText,
     getHotListFormTabType
   } from "../../../api/search.js";
+  import MescrollCompMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-comp.js'
   // 热搜列表
   const HOT_LIST = "0";
   const SEARCH_HISTORY = "1";
   const SEARCH_RESULT = "2";
   export default {
     components: {},
+    // 3. 注册 mixins
+    mixins: [MescrollCompMixin],
     data() {
       return {
         // 输入框的中默认内容
@@ -62,7 +66,7 @@
        * @return {*}
        */
       onSearchConfirm(val) {
-        this.searchValue = val ? val : this.defaultText;
+        this.searchValue = val ? val.label : this.defaultText;
         this.addSearchData(this.searchValue);
         if (this.searchValue) {
           this.showType = SEARCH_RESULT;

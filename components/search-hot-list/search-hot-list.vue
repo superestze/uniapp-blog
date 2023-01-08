@@ -13,52 +13,59 @@
 </template>
 
 <script>
-import { getSearchHotList } from "../../api/search";
-export default {
-  // 1. 先获取热搜列表的内容
-  data() {
-    return {
-      hotList: [],
-    };
-  },
-  created() {
-    this.loadSearchHotList();
-  },
-  methods: {
-    async loadSearchHotList() {
-      const { data: res } = await getSearchHotList();
+  import {
+    getSearchHotList
+  } from "../../api/search";
+  export default {
+    // 1. 先获取热搜列表的内容
+    data() {
+      return {
+        hotList: [],
+      };
+    },
+    created() {
+      this.loadSearchHotList();
+    },
+    methods: {
+      async loadSearchHotList() {
+        const {
+          data: res
+        } = await getSearchHotList();
 
-      this.hotList = res.list;
+        this.hotList = res.list;
+      },
+      onItemClick(item) {
+        this.$emit("onSearch", item);
+      },
     },
-    onItemClick() {
-      this.$emit("onSearch", item);
-    },
-  },
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.search-hot-list-container {
-  .search-hot-title {
-    font-weight: bold;
-    color: $uni-text-color-hot;
-    padding: 0 $uni-spacing-col-lg $uni-spacing-col-lg $uni-spacing-col-lg;
-    margin: 0 -12px $uni-spacing-col-lg -12px;
-    box-shadow: 2px 2px 2px 1px rgba(143, 143, 143, 0.1);
-  }
-  .search-hot-item {
-    display: flex;
-    align-items: center;
-    padding: $uni-spacing-col-lg 0;
-    .title {
-      color: $uni-text-color;
-      font-size: $uni-text-color-grey;
-      margin: 0 $uni-spacing-row-base;
+  .search-hot-list-container {
+    .search-hot-title {
+      font-weight: bold;
+      color: $uni-text-color-hot;
+      padding: 0 $uni-spacing-col-lg $uni-spacing-col-lg $uni-spacing-col-lg;
+      margin: 0 -12px $uni-spacing-col-lg -12px;
+      box-shadow: 2px 2px 2px 1px rgba(143, 143, 143, 0.1);
     }
-    .search-hot-icon {
-      width: 14px;
-      height: 14px;
+
+    .search-hot-item {
+      display: flex;
+      align-items: center;
+      padding: $uni-spacing-col-lg 0;
+
+      .title {
+        color: $uni-text-color;
+        font-size: $uni-text-color-grey;
+        margin: 0 $uni-spacing-row-base;
+      }
+
+      .search-hot-icon {
+        width: 14px;
+        height: 14px;
+      }
     }
   }
-}
 </style>
