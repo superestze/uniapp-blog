@@ -6,7 +6,7 @@
     <mescroll-body v-else ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback">
       <!-- 循环渲染列表数据 -->
       <block v-for="(item, index) in resultList" :key="index">
-        <view class="search-result-item-box">
+        <view @click="onItemClick(item)" class="search-result-item-box">
           <!-- 内容区 - 样式 1 -->
           <search-result-item-theme-1 v-if="!item.pic_list || item.pic_list.length === 0" :data="item" />
 
@@ -56,6 +56,11 @@
       this.mescroll = this.$refs.mescrollRef.mescroll
     },
     methods: {
+      onItemClick(item) {
+        uni.navigateTo({
+          url: "/subpkg/pages/blog-detail/blog-detail",
+        });
+      },
       // 3. 注册 mixins
       // 4. 实现三个回调方法
       /**

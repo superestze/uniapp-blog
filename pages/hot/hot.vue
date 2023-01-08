@@ -21,8 +21,9 @@
         <view>
           <uni-load-more status="loading" v-if="isLoading"></uni-load-more>
           <block v-else>
-            <hot-list-item :class="'hot-list-item-' + tabIndex" v-for="(item, index) in listData[tabIndex]" :data="item"
-              :ranking="index + 1" :key="index"> </hot-list-item>
+            <hot-list-item @click="onItemClick(item)" :class="'hot-list-item-' + tabIndex"
+              v-for="(item, index) in listData[tabIndex]" :data="item" :ranking="index + 1" :key="index">
+            </hot-list-item>
           </block>
         </view>
       </swiper-item>
@@ -57,6 +58,11 @@
       this.currentpageScrollTop = res.scrollTop;
     },
     methods: {
+      onItemClick(item) {
+        uni.navigateTo({
+          url: "/subpkg/pages/blog-detail/blog-detail",
+        });
+      },
       async loadHotTabs() {
         const {
           data: res
@@ -90,8 +96,8 @@
       },
       onToSearch() {
         uni.navigateTo({
-          url: '/subpkg/pages/search-blog/search-blog'
-        })
+          url: "/subpkg/pages/search-blog/search-blog",
+        });
       },
       getCurrentSwiperHeight() {
         return new Promise((resolve, reject) => {
