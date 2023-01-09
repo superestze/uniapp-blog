@@ -26,15 +26,24 @@
       <mp-html class="markdown_views" :content="articleData.content" scroll-table />
 
     </block>
+    <!-- 评论列表 -->
+    <view class="comment-box">
+      <article-comment-list ref="mescrollItem" :articleId="articleId"></article-comment-list>
+    </view>
+
+    <!-- 底部功能区 -->
+    <article-operate />
   </view>
 </template>
 
 <script>
+  import MescrollCompMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mixins/mescroll-comp.js';
   import {
     getArticleDetail
   } from 'api/article';
   import mpHtml from '@/uni_modules/mp-html/components/mp-html/mp-html';
   export default {
+    mixins: [MescrollCompMixin],
     components: {
       mpHtml
     },

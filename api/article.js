@@ -9,3 +9,14 @@ export function getArticleDetail(data) {
     data
   });
 }
+
+
+/**
+ * 获取文章评论列表
+ */
+export function getArticleCommentList(data) {
+  return request({
+    url: '/article/comment/list',
+    data
+  });
+}
