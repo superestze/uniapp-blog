@@ -1,22 +1,13 @@
 <template>
-  <view>
-
-  </view>
+  <my-login />
 </template>
 
 <script>
   export default {
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    }
-  }
+    name: 'login',
+  };
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>
