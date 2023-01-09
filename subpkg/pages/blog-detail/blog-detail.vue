@@ -21,7 +21,10 @@
         </view>
         <view class="detail-right">
           <!-- 关注按钮 -->
-          <button class="follow" size="mini">关注</button>
+
+          <button class="follow" size="mini" :type="articleData.isFollow ? 'primary' : 'default'" :loading="isFollowLoading" @click="onFollowClick">
+            {{ articleData.isFollow ? "已关注" : "关注" }}
+          </button>
         </view>
       </view>
       <!-- 文章内容 -->
@@ -42,6 +45,8 @@ import MescrollCompMixin from "@/uni_modules/mescroll-uni/components/mescroll-un
 import { getArticleDetail } from "api/article";
 import mpHtml from "@/uni_modules/mp-html/components/mp-html/mp-html";
 import { mapActions } from "vuex";
+import { userFollow } from "api/user";
+
 export default {
   mixins: [MescrollCompMixin],
   components: {
@@ -55,6 +60,8 @@ export default {
       articleId: "",
       // 文章详情数据
       articleData: null,
+      // 关注用户的 loading
+      isFollowLoading: false,
     };
   },
   onLoad(options) {
@@ -64,6 +71,27 @@ export default {
   },
   methods: {
     ...mapActions("user", ["isLogin"]),
+    /**
+     *  关注按钮点击事件
+     */
+    async onFollowClick() {
+      // 进行登录判定
+      const isLogin = await this.isLogin();
+      if (!isLogin) {
+        return;
+      }
+      // 关注用户
+      // 开启 button 的 loading
+      this.isFollowLoading = true;
+      const { data: res } = await userFollow({
+        author: this.author,
+        isFollow: !this.articleData.isFollow
+      });
+      // 修改用户数据
+      this.articleData.isFollow = !this.articleData.isFollow;
+      // 关闭 button 的 loading
+      this.isFollowLoading = false;
+    }
     /**
      * 获取文章详情数据
      */

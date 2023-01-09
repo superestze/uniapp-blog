@@ -1,4 +1,5 @@
 const BASE_URL = 'https://api.imooc-blog.lgdsunday.club/api';
+import store from '../store';
 
 function request({
   url,
@@ -11,6 +12,7 @@ function request({
       data,
       method,
       header: {
+        Authorization: store.state.user.token,
         icode: '2293F72EB7104E55'
       },
       success: ({

@@ -7,3 +7,14 @@ export function login(data) {
     data
   })
 }
+
+
+/**
+ * 关注用户
+ */
+export function userFollow(data) {
+  return request({
+    url: '/user/follow',
+    data
+  });
+}
