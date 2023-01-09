@@ -2,7 +2,8 @@
   "script": {
     "dev:h5": "npm run dev:h5"
   },
-  "pages": [{
+  "pages": [
+    {
       "path": "pages/hot/hot",
       "style": {
         "navigationBarTitleText": "热搜",
@@ -22,13 +23,13 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    }, {
+    },
+    {
       "path": "components/empty-data/empty-data",
       "style": {
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-
     }
   ],
   "globalStyle": {
@@ -42,7 +43,8 @@
   },
   "tabBar": {
     "selectedColor": "#f94d2a",
-    "list": [{
+    "list": [
+      {
         "pagePath": "pages/hot/hot",
         "text": "热搜",
         "iconPath": "static/tab-icons/hot.png",
@@ -62,20 +64,32 @@
       }
     ]
   },
-  "subPackages": [{
-    "root": "subpkg",
-    "name": "sub-1",
-    "pages": [{
-      "path": "pages/search-blog/search-blog",
-      "style": {
-        "navigationBarTitleText": "文章搜索"
-      }
-    }, {
-      "path": "pages/blog-detail/blog-detail",
-      "style": {
-        "navigationBarTitleText": "文章详情",
-        "enablePullDownRefresh": false
-      }
-    }]
-  }]
+  "subPackages": [
+    {
+      "root": "subpkg",
+      "name": "sub-1",
+      "pages": [
+        {
+          "path": "pages/search-blog/search-blog",
+          "style": {
+            "navigationBarTitleText": "文章搜索"
+          }
+        },
+        {
+          "path": "pages/blog-detail/blog-detail",
+          "style": {
+            "navigationBarTitleText": "文章详情",
+            "enablePullDownRefresh": false
+          }
+        },
+        {
+          "path": "pages/login-page/login-page",
+          "style": {
+            "navigationBarTitleText": "用户登录",
+            "enablePullDownRefresh": false
+          }
+        }
+      ]
+    }
+  ]
 }
