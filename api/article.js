@@ -20,3 +20,14 @@ export function getArticleCommentList(data) {
     data
   });
 }
+
+/**
+ * 发表评论
+ */
+export function userArticleComment(data) {
+  return request({
+    url: '/user/article/comment',
+    method: 'POST',
+    data
+  });
+}

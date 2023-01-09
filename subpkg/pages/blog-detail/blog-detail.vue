@@ -36,7 +36,11 @@
     </view>
 
     <!-- 底部功能区 -->
-    <article-operate />
+    <article-operate @commitClick="onCommit" />
+    <!-- 输入评论的popup -->
+    <uni-popup ref="popup" type="bottom" @change="onCommitPopupChange">
+      <article-comment-commit v-if="isShowCommit" :articleId="articleId" @success="onSendSuccess" />
+    </uni-popup>
   </view>
 </template>
 
@@ -62,6 +66,7 @@ export default {
       articleData: null,
       // 关注用户的 loading
       isFollowLoading: false,
+      isShowCommit: false,
     };
   },
   onLoad(options) {
@@ -71,6 +76,36 @@ export default {
   },
   methods: {
     ...mapActions("user", ["isLogin"]),
+    /**
+     * 发布评论的 popup 切换事件
+     */
+    onCommitPopupChange(e) {
+      // 修改对应的标记，当 popup 关闭时，为了动画平顺，进行延迟处理
+      if (e.show) {
+        this.isShowCommit = e.show;
+      } else {
+        setTimeout(() => {
+          this.isShowCommit = e.show;
+        }, 200);
+      }
+    },
+    /**
+     * 发布评论点击事件
+     */
+    onCommit() {
+      // 通过组件定义的ref调用uni-popup方法
+      this.$refs.popup.open();
+    },
+    /**
+     * 发表评论成功
+     */
+    onSendSuccess() {
+      // 关闭弹出层
+      this.$refs.popup.close();
+      this.isShowCommit = false;
+      // 显示评论数据
+      this.$refs.mescrollItem.addCommentList(data);
+    },
     /**
      *  关注按钮点击事件
      */
@@ -85,13 +120,13 @@ export default {
       this.isFollowLoading = true;
       const { data: res } = await userFollow({
         author: this.author,
-        isFollow: !this.articleData.isFollow
+        isFollow: !this.articleData.isFollow,
       });
       // 修改用户数据
       this.articleData.isFollow = !this.articleData.isFollow;
       // 关闭 button 的 loading
       this.isFollowLoading = false;
-    }
+    },
     /**
      * 获取文章详情数据
      */
